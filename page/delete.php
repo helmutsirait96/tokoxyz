@@ -1,0 +1,17 @@
+<?php 
+    // koneksi database 
+  require '../function/functions.php';
+   $no = $_GET["no"];
+   if( hapusData($no) > 0  ) {
+   	  echo "<script>
+                alert('Data berhasil dihapus');
+                document.location.href = 'barang.php';
+   		    </script>";
+   } else {
+   	  "<script>
+                alert('Data gagal dihapus');
+                document.location.href = 'barang.php';
+   		    </script>";
+   }
+
+ ?>

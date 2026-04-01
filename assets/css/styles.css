@@ -1,0 +1,111 @@
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     text-decoration: none;
+}
+
+html {
+	  font-size: 16px;
+}
+
+body {
+	  height: 100vh;
+	  padding: 1.1em;
+	  font-family: sans-serif;
+}
+
+/* --------------Barang------------------- */
+table {
+/*	  border: solid thin;*/
+	  width: 100%;
+	  border-collapse: collapse;
+}
+
+.baris {
+	  background-color: mintcream;
+}
+
+table caption {
+	  font-size: 2em;
+	  margin-bottom: 30px;
+}
+thead tr {
+	 text-align: center;
+	 background-color: #ddd;
+}
+
+thead tr th {
+	  font-weight: 600;
+	  padding: 1rem;
+}
+
+
+tbody tr {
+    text-align: center; 
+}
+
+tbody tr td {
+	  padding: .5rem;
+}
+
+.btn {
+	  display: inline-block;
+	 background-color: #333;
+	 font-weight: 700;
+	 color: white;
+	  padding: .7em 2em;
+	  font-size: .7em;
+	  text-transform: capitalize;
+
+}
+
+.btn:hover {
+	 background-color: rgba(0, 0, 0, .7);
+}
+
+label input:read-only {
+    pointer-events: none; /* Prevents all mouse events (clicks, hovers, etc.) */
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.title {
+	  text-align: left;
+}
+
+.insert {
+	  text-align: right;
+}
+
+/* --------------Update------------------- */
+ul {
+	 list-style: none;
+}
+
+.update-form {
+	  padding: 10px;
+	  max-width: 900px;
+	  margin: auto;
+	  width: 100%;
+}
+
+.update-form :where(label) {
+	  font-weight: bold;
+}
+
+ul li label input,
+select {
+	  display: block;
+	  width: 100%;
+	  padding: 10px;
+	  margin-top: 2px;
+	  margin-bottom: 10px;
+}
+ul li  {
+	  font-weight: 500;
+}
+
+
