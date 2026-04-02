@@ -41,12 +41,13 @@ thead tr th {
 }
 
 
-tbody tr {
+thead tr th{
     text-align: center; 
 }
 
-tbody tr td {
+tbody tr td{
 	  padding: .5rem;
+	  text-align: center;
 }
 
 .btn {
@@ -76,9 +77,27 @@ label input:read-only {
 	  text-align: left;
 }
 
-.insert {
-	  text-align: right;
+.form-cari {
+	  display: flex;
+	  align-items: center;
+	  margin-bottom: 10px;
+	  gap: 10px;
+	  width: 50%;
 }
+
+.form-cari input {
+     width: 100%;
+	 max-width: 50%;
+	  padding: 5px;
+}
+.insert {
+	 display: flex;
+	 flex-direction: row-reverse;
+	 justify-content: space-between;
+	 align-items: center;
+}
+
+
 
 /* --------------Update------------------- */
 ul {
@@ -108,4 +127,4 @@ ul li  {
 	  font-weight: 500;
 }
 
-
+/* -------------Insert------------------- */

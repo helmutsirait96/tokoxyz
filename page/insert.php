@@ -17,14 +17,14 @@
    		 echo "<script>
                 alert('Data berhasil ditambakan');
                 document.location.href = 'barang.php';
-
    		    </script>";
    	} else {
-   		"<script>
+   		echo "<script>
                 alert('Data gagal ditambakan');
                 document.location.href = 'barang.php';
    		    </script>";
    	}
+
      }
 
  ?>
@@ -39,7 +39,7 @@
 </head>
 <body> 
 	    <h1>Insert Data Barang</h1>
-	    <form action="" method="post">
+	    <form action="" method="post" enctype="multipart/form-data">
 	    	     <ul>
 	    	     	  <li>
 	    	     	  	   <label for="kode">
@@ -75,7 +75,7 @@
 	    	     	  	   <label for="kategori">
 	    	     	  	   Kategori
                        <select name="kategori" id="kategori" required>
-                       	   <option value="">Select Kategori</option>
+                       	   <option selected disabled value>Select Kategori</option>
                        	   <option value="Elektronik">Elektronik</option>
                        	   <option value="Pakaian">Pakaian</option>
                        	   <option value="Makanan">Makanan</option>
@@ -85,7 +85,7 @@
 	    	     	  <li>
 	    	     	  	   <label for="gambar">
 	    	     	  	   Gambar
-                       <input type="text" id="gambar" name="gambar" required>
+                       <input type="file" id="gambar" name="gambar" class="upload-gambar">
 	    	     	  	  </label>
 	    	     	  </li>
 	    	     	  <li>

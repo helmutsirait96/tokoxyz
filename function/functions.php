@@ -11,6 +11,53 @@
        return $rows;
  }
 
+// Upload Gambar
+ function uploadGambar() {
+      $nama_file = $_FILES["gambar"]["name"]; // nama file
+      $ukuran_gambar = $_FILES["gambar"]["size"]; // ukuran gambar
+      $error = $_FILES["gambar"]["error"]; // error pada gambar
+      $tmp_image = $_FILES["gambar"]["tmp_name"]; // tempat peyimpanan sementara
+
+      // cek apakah tidak ada gambar yang diupload 
+      if( $error === 4 ) {
+          echo "<script>
+                 alert('Pilih gambar terlebih dahulu!');
+               </script>";
+          return false;     
+      }  
+
+      // cek apakah yang diupload gambar 
+      $ekstensiGambarValid = ["jpg", "jpeg", "png"];
+      $ektensiGambar = explode('.', $nama_file);
+      $ektensiGambar = strtolower(end($ektensiGambar));
+      if( !in_array($ektensiGambar, $ekstensiGambarValid) ) {
+           echo "<script>
+                 alert('yang ada upload bukan gambar!');
+               </script>";
+          return false;     
+      }
+
+      // cek jika ukuran terlalu besar
+      if( $ukuran_gambar > 1000000 ) {
+             echo "<script>
+                 alert('Ukuran gambar terlalu besar!');
+               </script>";
+          return false;     
+      }
+
+      // lolos pengecekan gambar siap di upload 
+      // generate nama baru pada gambar 
+      $nama_file_baru = uniqid();
+      $nama_file_baru .= '.';
+      $nama_file_baru .= $ektensiGambar;
+      // var_dump($nama_file_baru);die;
+      move_uploaded_file($tmp_image, '../assets/images/' . $nama_file_baru);
+      return $nama_file_baru; 
+
+
+
+ }
+
  // Tambah Data Barang 
  function tambahDataBarang($barang) {
         // ambil data dari tiap elemen dalam form
@@ -21,9 +68,14 @@
          $harga = htmlspecialchars($barang["harga"]);
          $stock = htmlspecialchars($barang["stock"]);
          $kategori = htmlspecialchars($barang["kategori"]);
-         $gambar = htmlspecialchars($barang["gambar"]);
 
-      // query insert data
+   // upload gambar 
+    $gambar = uploadGambar();
+    if( !$gambar ) {
+        return $gambar;
+    } 
+
+   // query insert data
           $query = "INSERT INTO products
                     VALUES
                     ('', '$kode', '$nama', '$deskripsi', '$harga', '$stock', '$gambar', '$kategori')
@@ -32,6 +84,8 @@
 
            return mysqli_affected_rows($db);
  } 
+
+
 
 
 // Kode Otomatis 
@@ -63,8 +117,17 @@
          $harga = htmlspecialchars($update["harga"]);
          $stock = htmlspecialchars($update["stock"]);
          $kategori = htmlspecialchars($update["kategori"]);
-         $gambar = htmlspecialchars($update["gambar"]);
+        // Gambar lama 
+         $gambarLama = htmlspecialchars($update["gambarLama"]);
 
+         // cek user pilih gambar baru atau tidak 
+         if( $_FILES["gambar"]["error"] === 4 ) {
+              $gambar = $gambarLama;
+         } else {
+              // gambar Baru
+              $gambar = uploadGambar();
+         }
+         
       // query update data
           $query = "UPDATE products SET
                     kode = '$kode', 
@@ -80,6 +143,20 @@
          // return angka ketika data ada yang diupdate
            return mysqli_affected_rows($db);
  }
+
+//  Cari Barang 
+function cariBarang($keyword) {
+     $query = "SELECT * FROM products
+               WHERE 
+               nama LIKE '%$keyword%' OR
+               kode LIKE '%$keyword%' OR
+               harga LIKE '%$keyword%' OR
+               stock LIKE '%$keyword%' OR
+               kategori LIKE '%$keyword%'
+              ";
+      return query($query);        
+}
+
 
 
 

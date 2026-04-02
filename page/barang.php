@@ -1,18 +1,18 @@
 <?php 
-    // koneksi database 
+ // koneksi database 
       require '../function/functions.php';
-      // query data dari database toko 
+ // Tampilkan seluruh data barang
       $products = query("Select * FROM products"); 
-      // $result = mysqli_query($db, "SELECT * FROM products"); 
-      // ambil data dari object result (fetch)
-      // mysqli_fetch_row()  -> array numerik
-      // mysqli_fetch_assoc() -> mengembalikan array associative
-      // mysqli_fetch_array() -> Mengembalikan keduanya 
-      // mysqli_fetch_object() -> Megembalikan object 
+  // Tombol cari Ditekan
+     if( isset($_POST["find"]) ) {
+     	  // mendapatkan apapun yang di ketik kan oleh user
+           $products = cariBarang($_POST["keyword"]);	 
+     	     $jumlahData = count($products);
+     	     if($jumlahData == 0) {
+                  $dataKosong = true;
+          }
 
-
-
-
+       }
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +25,10 @@
 <body> 
 	<div class="insert">
 	     <a href="insert.php" class="btn" target="_blank">Insert Data</a> 
+	     <form action="" method="post" class="form-cari">
+	     	      <input type="text" name="keyword" autofocus placeholder="keyword Pencarian" autocomplete="off">
+	     	      <button type="submit" name="find" class="btn">Find Data</button>
+	     </form>
 	</div>
 	 <table>
 	 	  <caption class="title">
@@ -44,6 +48,9 @@
 	 	  	    </tr>
 	 	  </thead>
 	 	  <tbody>
+	 	  	 <?php if (isset($dataKosong)) :?>
+            <p style="collor: red; font-size: 1.5em;">Data Tidak Ditemukkan!</p>
+	 	  	<?php endif; ?>
 	 	  	<?php $urutan = 1; ?>
 	 	  	<?php  foreach( $products as $row ) : ?>	
 	 	  		 <?php if($urutan % 2 == 0): ?>

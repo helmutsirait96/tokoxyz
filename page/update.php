@@ -33,7 +33,7 @@
 
    		    </script>";
    	} else {
-   		"<script>
+   		echo "<script>
                 alert('Data gagal diupdate');
                 document.location.href = 'barang.php';
    		    </script>";
@@ -52,8 +52,9 @@
 </head>
 <body> 
 	    <h1>Update Data Barang</h1>
-	    <form action="" method="post" class="update-form">
+	    <form action="" method="post" class="update-form" enctype="multipart/form-data">
 	    	     <input type="hidden" name="no" value="<?= $pro["no"]; ?>">
+	    	     <input type="hidden" name="gambarLama" value="<?= $pro["gambar"]; ?>">
 	    	     <ul>
 	    	     	  <li>
 	    	     	  	   <label for="kode">
@@ -106,7 +107,8 @@
 	    	     	  <li>
 	    	     	  	   <label for="gambar">
 	    	     	  	   Gambar
-                       <input type="text" id="gambar" name="gambar" value="<?= $pro["gambar"]; ?>">
+	    	     	  	   <img src="../assets/images/<?= $pro["gambar"]; ?>" alt="" style="display: block;" width="40">
+                       <input type="file" id="gambar" name="gambar">
 	    	     	  	  </label>
 	    	     	  </li>
 	    	     	  <li>
