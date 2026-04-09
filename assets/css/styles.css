@@ -1,9 +1,3 @@
-* {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     text-decoration: none;
-}
 
 html {
 	  font-size: 16px;
@@ -13,11 +7,11 @@ body {
 	  height: 100vh;
 	  padding: 1.1em;
 	  font-family: sans-serif;
+	  padding: 1rem;
 }
 
 /* --------------Barang------------------- */
 table {
-/*	  border: solid thin;*/
 	  width: 100%;
 	  border-collapse: collapse;
 }
@@ -66,7 +60,7 @@ tbody tr td{
 }
 
 label input:read-only {
-    pointer-events: none; /* Prevents all mouse events (clicks, hovers, etc.) */
+    pointer-events: none; 
     background-color: #f0f0f0;
     color: #999;
     cursor: not-allowed;
@@ -127,4 +121,9 @@ ul li  {
 	  font-weight: 500;
 }
 
-/* -------------Insert------------------- */
+
+
+
+
+
+

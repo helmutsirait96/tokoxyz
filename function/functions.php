@@ -157,6 +157,42 @@ function cariBarang($keyword) {
       return query($query);        
 }
 
+// Function Register User
+   function registerUser($register) {
+         global $db;
+
+         $username =  strtolower(stripcslashes($register["username"]));
+         $password = mysqli_real_escape_string($db, $register["password"]);
+         $confirmpassword = mysqli_real_escape_string($db, $register["confirm"]);
+         $email = strtolower(stripcslashes($register["email"]));
+        
+         // cek username sudah ada atau belum 
+         $result = mysqli_query($db, "SELECT username FROM users WHERE username = '$username'");
+          if( mysqli_fetch_assoc($result) ) {
+               echo "
+                  <script>
+                    alert('username sudah terdaftar');
+                  </script>
+               ";
+               return false;
+          } 
+
+
+        // Cek Konfirmasi password
+         if( $password !== $confirmpassword ) {
+              echo "<script>
+                  alert('Konfimasi password tidak sesuai');
+                </script>";
+              return false;   
+         }
+
+         // Engkripsi password 
+         $password = password_hash($password, PASSWORD_DEFAULT);
+         // add user ke dalam database 
+         mysqli_query($db, "INSERT INTO users VALUES('', '$username', '$password', '$email')");
+
+         return mysqli_affected_rows($db);
+   }
 
 
 

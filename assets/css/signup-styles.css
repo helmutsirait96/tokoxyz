@@ -1,0 +1,35 @@
+body {
+	  display: grid;
+	  place-items: center;
+}
+.signup-form {
+	  width: 800px;
+}
+
+.signup-form  label {
+	  display: block;
+	  margin-bottom: 10px;
+}
+
+.signup-form  label input {
+	  margin-top: 10px;
+	  display: block;
+	  width: 100%;
+	  font-size: 16px;
+	  padding: .5em;
+}
+
+#password-error {
+	  display: none;
+	  margin-top: 10px;
+	  color: red;
+}
+
+.password-wrap {
+	  display: flex;
+	  gap: 10px;
+}
+
+.password-wrap #password {
+	  width: 500px;
+}
