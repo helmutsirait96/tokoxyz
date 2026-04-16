@@ -1,4 +1,12 @@
 <?php 
+    session_start();
+    	if( !isset($_SESSION['login'])) {
+    		 header("Location: ../index.php");
+    		 exit;
+    	}	
+
+
+    	
  // koneksi database 
       require '../function/functions.php';
  // Tampilkan seluruh data barang
@@ -31,6 +39,8 @@
 	     </form>
 	</div>
 	 <table>
+	 	  <a href="main-page.php">Home</a>
+	 	  <a href="admin.php">Admin Dashboard</a>
 	 	  <caption class="title">
 	 	     <strong>Barang</strong>
 	 	</caption>

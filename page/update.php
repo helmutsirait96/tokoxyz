@@ -1,4 +1,9 @@
 <?php 
+  session_start();
+    	if( !isset($_SESSION['login']) ) {
+    		 header("Location: ../index.php");
+    		 exit;
+    	}	
  // koneksi database 
    require '../function/functions.php';
  // ambil data di URL

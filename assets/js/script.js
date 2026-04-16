@@ -1,4 +1,4 @@
-function cekPassword (password) {
+function cekPassword (password) { 
 	 // Rules :
 	 // - Minimal 8 karakter 
 	 // - Minimal 1 Huruf besar
@@ -44,7 +44,7 @@ passwordInput.addEventListener('input', function () {
     	   passwordError.style.display = 'none';
     } else {
     	  passwordError.style.display = 'block';
-    	  passwordError.innerText = 'Password tidak memmenuhi password';
+    	  passwordError.innerText = 'Password tidak memenuhi password';
     }
 })
 
@@ -58,5 +58,10 @@ togglePasswordButton.addEventListener('click', function() {
    	  togglePasswordButton.innerText = 'Sembunyikan password'; 
    	  passwordVisible = true;
    }
-  
 });
+
+ 
+
+
+
+
