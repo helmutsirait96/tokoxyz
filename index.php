@@ -45,11 +45,16 @@
      	        	   exit;
      	        }
       }
-      $error = true;
+      // $error = true;
+       echo "<script>
+              window.onload = async function() {
+                  // Menunggu user klik OK pada modal
+                  await showModal('Username atau password anda salah!');
+                  // Setelah klik OK, baru pindah halaman
+                  window.location.href = 'index.php';
+              };
+          </script>"; 
      }
-
-
-
  ?>
 
 <!DOCTYPE html>
@@ -63,29 +68,33 @@
 	<link rel="stylesheet" href="./assets/css/login.css">
 </head>
 <body>
-	<main>
+	<main class="main-container">
 	    <h1>Sign In</h1>
-	    <?php if( isset($error) ) : ?>
-              <p style="color: red; font-style: italic;">username / password salah</p>
-	   <?php endif; ?> 	
+	     <p class="subtitle">Welcome back! Please enter your details.</p>
 	    <form action="" method="post" class="form-login">
-	      <label>
-		      Email
-	            <input type="email" name="email">
-	    </label>
-             <label >
-	   	    Password 
-	   	    <input type="password" name="password">
-	    	 </label>
-	    	 <label>
-             	    <input type="checkbox" name="remember">
-             	    Remember Me
-             	 </label>
-              <button type="submit" name="login" class="btn fill">Login</button>
+	   <div class="input-group">
+	      <label for="email">Email</label>
+	      <input type="email" name="email" id="email">
+	</div>
+	   <div class="input-group">
+              <label for="password">Password</label>
+	       <input type="password" name="password" id="password">
+	    </div>
+           
+	   <div class="options">
+	     <label for="remember-me" class="remember-me">
+             <input type="checkbox" name="remember" id="remember-me">
+	       <span>Remember Me</span>
+	     </label>
+                <a href="#" class="forgot-pass">Forgot Password?</a>
+           </div>  	   
+             
+           <button type="submit" name="login" class="btn fill">Login</button>
 	    </form>
-	   <a href="./page/signup.php">Register for an account</a>
+	    <p class="footer-text">
+	    	   Don't have an account? <a href="./page/signup.php">Register for an account</a>
+	    </p>
 	 </main>  
-	 <script src="./assets/js/login.js"></script>
-
+	 <script src="./assets/js/script.js"></script>
 </body>
 </html>
