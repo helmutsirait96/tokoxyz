@@ -83,7 +83,6 @@ body {
      box-shadow: 0 10px 25px var(--shadow);
      width: 100%;
      max-width: 500px;
-/*     text-align: center;*/
 }
 
 h1 {
@@ -160,6 +159,9 @@ h1 {
 }
 
 /* Button Interactive */
+.btn {
+      display: inline-block;
+}
 .btn.fill {
     width: 100%;
     padding: 1.5rem;
@@ -348,3 +350,69 @@ h1 {
 .search-box {
       width: 50%;
 }
+
+/* data barang */
+.main-data-barang {
+      display: flex;
+      flex-direction: column;
+      background: var(--bc-card);
+     padding: 2.5rem;
+     border-radius: 15px;
+     box-shadow: 0 10px 25px var(--shadow);
+     width: 100%;
+     gap: 10px;
+}
+
+.form-cari {
+     display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+table {
+    background-color: #fff;
+    border-collapse: collapse;
+}
+
+table, th, td {
+      border: 1px solid var(--primary);
+      padding: 8px 20px;
+}
+
+.menu-barang {
+      display: flex;
+      gap: 20px;
+}
+.menu-barang a {
+      text-decoration: none;
+      color: var(--primary);
+}
+
+.menu-barang a:hover {
+    color: #ba55d3;
+}
+
+.insert {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+}
+
+.btn.barang {
+      width: 8%;
+      padding: 5px;
+      font-size: .8em;
+}
+
+
+
+
+td a.aksi{
+      display: block;
+       text-decoration: none;
+       width: 5%;
+       text-align: center;
+       font-size: .3em;
+       margin-top: 10px;
+}
+

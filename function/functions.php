@@ -144,7 +144,21 @@
            return mysqli_affected_rows($db);
  }
 
-//  Cari Barang 
+//  Cari Barang & pagination
+ // Konfigurasi pagination
+     // jumlah data perhalaman 
+    $jumlahDataPerhalaman = 2;
+    // jumlah halaman = total data / data perhalaman
+    // Jumlah data yang ada di dalam database
+    $jumlahData = count(query("SELECT * FROM products"));
+    // jumlah halaman yang mau di tampilkan
+    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+    // mengambil halaman aktif
+    $halamanAktif = ( isset($_GET["page"]) ) ? $_GET["page"] : 1;
+    // awal data perhalaman
+    $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+    // halaman = 2, awal data = 3 
+
 function cariBarang($keyword) {
      $query = "SELECT * FROM products
                WHERE 
