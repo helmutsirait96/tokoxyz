@@ -8,40 +8,134 @@
  // koneksi database 
       require '../function/functions.php';
  // pagination
-    $products = query("SELECT * FROM products LIMIT $awalData, $jumlahDataPerhalaman"); 
+    // $products = query("SELECT * FROM products LIMIT $awalData, $jumlahDataPerhalaman"); 
   
-
-
-
   // Tombol cari Ditekan
-     if( isset($_POST["find"]) ) {
-     	  // mendapatkan apapun yang di ketik kan oleh user
-          //  $products = cariBarang($_GET["keyword"]);	
-     	    //  $jumlahData = count($products);
-     	    //  if($jumlahData == 0) {
-          //         $dataKosong = true;
-          // }
-           $_SESSION["keyword"] = $_POST["keyword"];
-           $halamanAktif = 1; // Reset ke halaman 1 setiap kali cari baru
-           // Ambil keyword dari session jika ada, jika tidak kosongkan
-           $keyword = (isset($_SESSION["keyword"])) ? $_SESSION["keyword"] : "";
-           // 2. Konfigurasi Pagination
-           $jumlahDataPerhalaman = 2;
-         // Hitung jumlah data berdasarkan keyword di session
-         $queryHitung = "SELECT * FROM products WHERE 
-                nama LIKE '%$keyword%' OR 
-                kode LIKE '%$keyword%' OR 
-                harga LIKE '%$keyword%' OR
-                stock LIKE '%$keyword%' OR
-               kategori LIKE '%$keyword%'";
-          $jumlahData = count(query($queryHitung));
-         $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
-         $halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
-        $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
-      // 3. Ambil data dengan LIMIT
-       $products = query("$queryHitung LIMIT $awalData, $jumlahDataPerhalaman"); 
+     // if( isset($_POST["find"]) ) {
+     // 	  // mendapatkan apapun yang di ketik kan oleh user
+     //       $products = cariBarang($_POST["keyword"]);	
+     //       // jika data kosong 
+     // 	     $jumlahData = count($products);
+     // 	     if($jumlahData == 0) {
+     //              $dataKosong = true;
+     //      }  
+     // }  
+     
+// 1. KONFIGURASI PAGINATION
+// $jumlahDataPerhalaman = 2;
 
-       }
+// 2. CEK APAKAH USER SEDANG MENCARI SESUATU
+// Gunakan $_GET atau $_REQUEST agar keyword tetap tersimpan saat pindah halaman
+// $keyword = "";
+// if (isset($_POST["find"])) {
+//     $keyword = $_POST["keyword"];
+// } elseif (isset($_GET["keyword"])) {
+//     $keyword = $_GET["keyword"];
+// }
+
+// // 3. HITUNG TOTAL DATA (Berdasarkan Keyword jika ada)
+// if ($keyword != "") {
+//     $queryHitung = "SELECT * FROM products WHERE 
+//                     nama LIKE '%$keyword%' OR 
+//                     kode LIKE '%$keyword%' OR 
+//                     harga LIKE '%$keyword%' OR
+//                     stock LIKE '%$keyword%' OR
+//                     kategori LIKE '%$keyword%'";
+// } else {
+//     $queryHitung = "SELECT * FROM products";
+// }
+
+// $hasilHitung = query($queryHitung);
+// $jumlahData = count($hasilHitung);
+// $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+
+// // 4. TENTUKAN HALAMAN AKTIF
+// $halamanAktif = (isset($_GET["page"])) ? (int)$_GET["page"] : 1;
+// $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+
+// // 5. AMBIL DATA DENGAN LIMIT (Sesuai Keyword + Pagination)
+// if ($keyword != "") {
+//     $queryData = "SELECT * FROM products WHERE 
+//                   nama LIKE '%$keyword%' OR 
+//                   kode LIKE '%$keyword%' OR 
+//                   harga LIKE '%$keyword%' OR
+//                   stock LIKE '%$keyword%' OR
+//                   kategori LIKE '%$keyword%' 
+//                   LIMIT $awalData, $jumlahDataPerhalaman";
+// } else {
+//     $queryData = "SELECT * FROM products LIMIT $awalData, $jumlahDataPerhalaman";
+// }
+
+// $products = query($queryData);
+
+// // 6. CEK JIKA DATA KOSONG
+// if ($jumlahData == 0) {
+//     $dataKosong = true;
+// }
+
+
+// KONFIGURASI PAGINATION
+$jumlahDataPerhalaman = 2;
+
+// CEK APAKAH USER SEDANG MENCARI SESUATU
+// Ambil keyword dari URL (pakai method GET agar pagination sinkron)
+$keyword = (isset($_GET["keyword"])) ? $_GET["keyword"] : "";
+$displayKeyword = "";
+if (isset($_POST["find"])) {
+    $keyword = $_POST["keyword"];
+    $displayKeyword = ""; // Ini yang membuat input jadi kosong lagi
+
+} elseif (isset($_GET["keyword"])) {
+    $keyword = $_GET["keyword"];
+    $displayKeyword = $keyword;
+} else {
+	  $keyword = "";
+}
+
+// 3. HITUNG TOTAL DATA (Berdasarkan Keyword jika ada)
+if ($keyword != "") {
+    $queryHitung = "SELECT * FROM products WHERE 
+                    nama LIKE '%$keyword%' OR 
+                    kode LIKE '%$keyword%' OR 
+                    harga LIKE '%$keyword%' OR
+                    stock LIKE '%$keyword%' OR
+                    kategori LIKE '%$keyword%'";
+} else {
+    $queryHitung = "SELECT * FROM products";
+}
+
+$hasilHitung = query($queryHitung);
+$jumlahData = count($hasilHitung);
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+
+// 4. TENTUKAN HALAMAN AKTIF
+$halamanAktif = (isset($_GET["page"])) ? (int)$_GET["page"] : 1;
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+
+//  ambil data dengan LIMIT (Sesuai Keyword + Pagination)
+if ($keyword != "") {
+    $queryData = "SELECT * FROM products WHERE 
+                  nama LIKE '%$keyword%' OR 
+                  kode LIKE '%$keyword%' OR 
+                  harga LIKE '%$keyword%' OR
+                  stock LIKE '%$keyword%' OR
+                  kategori LIKE '%$keyword%' 
+                  LIMIT $awalData, $jumlahDataPerhalaman";
+} else {
+    $queryData = "SELECT * FROM products LIMIT $awalData, $jumlahDataPerhalaman";
+}
+
+$products = query($queryData);
+
+ // cek jika data kosong
+if ($jumlahData == 0) {
+    $dataKosong = true;
+}
+
+
+
+
+
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,25 +155,25 @@
         </div>
 	     <form action="" method="post" class="form-cari">
                <div class="input-group search-box">
-	     	      <input type="text" name="keyword" autofocus placeholder="keyword Pencarian" autocomplete="off">
+	     	      <input type="text" name="keyword" autofocus placeholder="keyword Pencarian" autocomplete="off" value="<?= $displayKeyword; ?>">
 	     	   </div>
 	     	      <button type="submit" name="find" class="btn fill barang">Find Data</button>
 	     </form>
 	     <!-- navigasi -->
 	     <div class="nav-pagination">
          <?php if( $halamanAktif > 1 ) : ?>
-	         	<a href="?page=<?= $halamanAktif - 1; ?>">&laquo;</a>
+	         	<a href="?page=<?= $halamanAktif - 1; ?>&keyword=<?= $keyword; ?>" class="prev">Previous</a>
           <?php endif; ?> 	
 
 	     	   <?php for($i = 1; $i <= $jumlahHalaman; $i++) : ?>
 	     	   	<?php if( $i == $halamanAktif ) : ?>
-                 <a href="?page=<?= $i; ?>" style="font-weight: bold; color:red;"><?= $i; ?></a>
+                 <a href="?page=<?= $i; ?>&keyword=<?= $keyword; ?>" style="font-weight: bold; color: greenyellow; background-color: black;"><?= $i; ?></a>
               <?php else : ?>
-                 <a href="?page=<?= $i; ?>"><?= $i; ?></a>  
+                 <a href="?page=<?= $i; ?>&keyword=<?= $keyword; ?>"><?= $i; ?></a>  
               <?php endif; ?> 
 	        <?php endfor; ?> 
 	               <?php if( $halamanAktif < $jumlahHalaman ) : ?>
-	         	<a href="?page=<?= $halamanAktif + 1; ?>">&raquo;</a>
+	         	<a href="?page=<?= $halamanAktif + 1; ?>&keyword=<?= $keyword; ?>" class="next">Next</a>
           <?php endif; ?> 	
 	     </div>
 	     	<!-- end navigation -->

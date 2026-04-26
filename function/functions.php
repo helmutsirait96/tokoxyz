@@ -147,27 +147,25 @@
 //  Cari Barang & pagination
  // Konfigurasi pagination
      // jumlah data perhalaman 
-    $jumlahDataPerhalaman = 2;
+    // $jumlahDataPerhalaman = 2;
     // jumlah halaman = total data / data perhalaman
     // Jumlah data yang ada di dalam database
-    $jumlahData = count(query("SELECT * FROM products"));
+    // $jumlahData = count(query("SELECT * FROM products"));
     // jumlah halaman yang mau di tampilkan
-    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+    // $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
     // mengambil halaman aktif
-    $halamanAktif = ( isset($_GET["page"]) ) ? $_GET["page"] : 1;
+    // $halamanAktif = ( isset($_GET["page"]) ) ? $_GET["page"] : 1;
     // awal data perhalaman
-    $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+    // $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
     // halaman = 2, awal data = 3 
 
 function cariBarang($keyword) {
-     $query = "SELECT * FROM products
-               WHERE 
-               nama LIKE '%$keyword%' OR
-               kode LIKE '%$keyword%' OR
-               harga LIKE '%$keyword%' OR
-               stock LIKE '%$keyword%' OR
-               kategori LIKE '%$keyword%'
-              ";
+     $query = "SELECT * FROM products WHERE 
+                nama LIKE '%$keyword%' OR 
+                kode LIKE '%$keyword%' OR 
+                harga LIKE '%$keyword%' OR
+                stock LIKE '%$keyword%' OR
+               kategori LIKE '%$keyword%'";
       return query($query);        
 }
 

@@ -271,7 +271,7 @@ h1 {
     border: none;
     background: none;
     text-align: left;
-    font-size: 1rem;
+    font-size: 2em;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -416,3 +416,40 @@ td a.aksi{
        margin-top: 10px;
 }
 
+.nav-pagination a { 
+   text-decoration: none;
+   border-radius: 100%;
+  background-color: var(--primary);
+  color: #fff;
+   width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 5px 12px;
+   display: block;
+  font-size: 14px;
+  font-weight: 500;
+ }
+.nav-pagination {
+    display: flex;
+    max-width: 500px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.nav-pagination .prev {
+     border-radius: 50px 0 0 50px;
+    width: 100px;
+}
+
+.nav-pagination .next {
+      border-radius: 0 50px 50px 0;
+  width: 100px;
+}
+
+.nav-pagination a:hover{
+  background-color: #FFA100;
+  color: #fff;
+  font-weight: 1000;
+  transform: translateY(8px);
+  transition: all .3s ease-out;
+}
