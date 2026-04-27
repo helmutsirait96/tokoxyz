@@ -1,7 +1,7 @@
 <?php 
     session_start();
      // koneksi database 
-    require './function/functions.php';
+    require '../function/functions.php';
     // admin
        // cek cookie 
     if( isset($_COOKIE['kode']) && isset($_COOKIE['value'])) {
@@ -41,7 +41,7 @@
      	        	    	  setcookie('kode', $row['id'], time() + (60 * 60 * 24), '/');
      	        	    	  setcookie('value', hash('sha256', $row['username']), time() + (60 * 60 * 24), '/');
      	        	    }
-     	        	   header("Location: ./page/admin.php");
+     	        	   header("Location: ./admin.php");
      	        	   exit;
      	        }
       }
@@ -51,7 +51,7 @@
                   // Menunggu user klik OK pada modal
                   await showModal('Username atau password anda salah!');
                   // Setelah klik OK, baru pindah halaman
-                  window.location.href = 'index.php';
+                  window.location.href = './login.php';
               };
           </script>"; 
      }
@@ -63,9 +63,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
-	<link rel="stylesheet" href="./assets/css/reset.css">
-	<link rel="stylesheet" href="./assets/css/styles.css">
-	<link rel="stylesheet" href="./assets/css/login.css">
+	<link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
 	<main class="main-container">
@@ -92,7 +90,7 @@
            <button type="submit" name="login" class="btn fill">Login</button>
 	    </form>
 	    <p class="footer-text">
-	    	   Don't have an account? <a href="./page/signup.php">Register for an account</a>
+	    	   Don't have an account? <a href="./signup.php">Register for an account</a>
 	    </p>
 	 </main>  
 	 <script src="./assets/js/script.js"></script>

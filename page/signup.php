@@ -67,7 +67,7 @@
               <input type="email" id="email" name="email" required>
             </div>
              <button class="btn fill" name="register">Register</button>
-            <p class="footer-text">Already have an account? <a href="../index.php">Sign In</a></p>
+            <p class="footer-text">Already have an account? <a href="./login.php">Sign In</a></p>
 	  </form> 
     </main>
     <script src="../assets/js/script.js"></script>

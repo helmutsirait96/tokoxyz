@@ -75,6 +75,44 @@ body {
     padding: 20px;
 }
 
+/* ------------------- Main Page -------------------- */
+header {
+     background-color: var(--sidebar-bg);
+      padding: 2.5rem;
+     box-shadow: 0 10px 25px var(--shadow);
+     width: 100%;
+     position: absolute;
+     top: 0;
+}
+
+header h1 {
+     color: white;
+}
+
+header nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+}
+
+nav form {
+    flex: .5;
+}
+
+.login-container {
+     display: flex;
+     gap: 10px;
+}
+.login-container a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid black;
+}
+
+
+
+
+
 /*--------------- Login ------------------------------*/
 .main-container {
      background: var(--bc-card);
@@ -452,4 +490,11 @@ td a.aksi{
   font-weight: 1000;
   transform: translateY(8px);
   transition: all .3s ease-out;
+}
+
+/* -----------------------------insert--------------------- */
+#kategori {
+      display: block;
+      width: 100%;
+      padding: 10px;
 }

@@ -43,60 +43,51 @@
 	<link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body> 
+	<main class="main-container">
 	    <h1>Insert Data Barang</h1>
 	    <form action="" method="post" enctype="multipart/form-data">
-	    	     <ul>
-	    	     	  <li>
-	    	     	  	   <label for="kode">
-	    	     	  	   Kode
-                       <input type="text" id="kode" name="kode" value="<?= $kodeBaru; ?>" readonly="readonly" required>
-	    	     	  	  </label>
-	    	     	  </li> 
-	    	     	  <li>
-	    	     	  	   <label for="nama">
-	    	     	  	   Nama
-                       <input type="text" id="nama" name="nama" required>
-	    	     	  	  </label>
-	    	     	  </li> 
-	    	     	  <li>
-	    	     	  	   <label for="deskripsi">
-	    	     	  	   Deskripsi
-                       <input type="text" id="deskripsi" name="deskripsi" required>
-	    	     	  	  </label>
-	    	     	  </li>
-	    	     	  <li>
-	    	     	  	   <label for="harga">
-	    	     	  	   Harga
-                       <input type="number" id="harga" name="harga" required>
-	    	     	  	  </label>
-	    	     	  </li> 
-	    	     	   <li>
-	    	     	  	   <label for="stock">
-	    	     	  	   Stock
-                       <input type="number" id="stock" name="stock" required>
-	    	     	  	  </label>
-	    	     	  </li>
-	    	     	  <li>
-	    	     	  	   <label for="kategori">
-	    	     	  	   Kategori
+	    	         <div class="input-group">
+	    	             <label for="kode">Kode</label>
+                     <input type="text" id="kode" name="kode" value="<?= $kodeBaru; ?>" readonly="readonly" required>
+	    	     	    </div>
+	    	     	    
+	    	     	      <div class="input-group">
+	    	     	      	  <label for="nama">Nama</label>
+                         <input type="text" id="nama" name="nama" required>
+	    	     	      </div>
+	    	     	      
+	    	     	  <div class="input-group">
+	    	     	  	   <label for="deskripsi">Deskripsi</label>
+                     <input type="text" id="deskripsi" name="deskripsi" required>
+	    	     	  	</div>
+	    	     	    
+
+	    	     	   <div class="input-group">
+	    	     	  	   <label for="harga">Harga</label>
+                      <input type="number" id="harga" name="harga" required>
+	    	     	    </div>	
+	    	     	    
+	    	     	   <div class="input-group">	    	     	    
+	    	     	  	   <label for="stock">Stock</label>
+                     <input type="number" id="stock" name="stock" required>
+	    	     	  </div>	 
+	    	     	 
+	    	     	   <div class="input-group">
+	    	     	   	   <label for="kategori">Kategori</label>
                        <select name="kategori" id="kategori" required>
                        	   <option selected disabled value>Select Kategori</option>
                        	   <option value="Elektronik">Elektronik</option>
                        	   <option value="Pakaian">Pakaian</option>
                        	   <option value="Makanan">Makanan</option>
                        </select>
-	    	     	  	  </label>
-	    	     	  </li>
-	    	     	  <li>
-	    	     	  	   <label for="gambar">
-	    	     	  	   Gambar
+	    	     	   </div>
+	    	     	  	  
+	    	     	  	 <div class="input-group">
+	    	     	  	 	     <label for="gambar">Gambar</label>
                        <input type="file" id="gambar" name="gambar" class="upload-gambar">
-	    	     	  	  </label>
-	    	     	  </li>
-	    	     	  <li>
-	    	     	  	   <button type="submit" name="submit" class="btn">Insert Data!</button>
-	    	     	  </li>
-	    	     </ul>
+	    	     	  	 </div>
+	    	     	 <button type="submit" name="submit" class="btn fill">Insert Data!</button>
 	    </form>
+	 </main>   
 </body>
 </html>
