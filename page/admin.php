@@ -1,4 +1,5 @@
 <?php 
+      require '../function/functions.php';
        session_start();
     	if( !isset($_SESSION['login'])) {
     		 header("Location: ../index.php");
@@ -40,16 +41,15 @@
              <a href="./barang.php" class="nav-item">Data Barang</a>
             <a href="./logout.php" class="nav-item">Logout!</a>   
         </nav>
-        
            </aside>
-    </div>
-    <main class="main-content">
+
+       <main class="main-content">
          <header class="top-bar">
                <div class="input-group search-box">
                      <input type="text" placeholder="Search data.....">
                </div>
                 <div class="user-profile">
-                  <span>Welcome, <strong>Admin</strong></span>
+                  <span>Welcome, <strong><?= salam(waktu(), "Admin"); ?></strong></span>
                  <img src="" alt="Avatar">
             </div>
          </header>
@@ -57,6 +57,8 @@
                <h2>Dashboard Overview</h2>
          </section>
     </main>
+    </div>
+    
 
     <script src="../assets/js/script.js"></script>
 </body>

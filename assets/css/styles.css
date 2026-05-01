@@ -265,10 +265,12 @@ h1 {
 
 /*--------------------------Admin-------------------------*/
 .main-dashboard-container {
+  width: 1200px;
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
-   grid-template-areas: 'sidebar main main';
-   background-color: #fff;
+   grid-template-columns: 1fr 1fr;
+   grid-template-areas: 'sidebar main';
+/*   background-color: #fff;*/
+   
 }
 
 .sidebar-header h1 {
@@ -276,7 +278,7 @@ h1 {
 }
 
 .sidebar {
-    width: 260px;
+/*    width: 260px;*/
     background-color: var(--sidebar-bg);
     height: 100vh;
     color: var(--text-light);
@@ -345,20 +347,20 @@ h1 {
 
 /* Main Content Styling */
 .main-content {
-   width: 100%;
-    width: calc(100vw + 100%);
-    min-height: 100vh;
+    width: 900px;
     grid-area: main;
+    position: relative;
     background-color: #fff;
 }
 
 .top-bar {
-    width: calc(100vw - 300px);
+/*     width: 100%;*/
     background: white;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid black ;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
@@ -369,7 +371,11 @@ h1 {
     margin-left: 10px;
 }
 
-.content-body { padding: 30px; }
+.content-body { 
+       display: grid;
+       place-items: center;
+       min-height: 100vh;
+     }
 
 .nav-item, .dropdown-btn {
     display: block;

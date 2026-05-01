@@ -1,39 +1,60 @@
 <?php 
+ // session
     session_start();
     	if( !isset($_SESSION['login'])) {
     		 header("Location: ../index.php");
     		 exit;
     	}	
-
  // koneksi database 
       require '../function/functions.php';
- // pagination
-    // $products = query("SELECT * FROM products LIMIT $awalData, $jumlahDataPerhalaman"); 
-  
-  // Tombol cari Ditekan
-     // if( isset($_POST["find"]) ) {
-     // 	  // mendapatkan apapun yang di ketik kan oleh user
-     //       $products = cariBarang($_POST["keyword"]);	
-     //       // jika data kosong 
-     // 	     $jumlahData = count($products);
-     // 	     if($jumlahData == 0) {
-     //              $dataKosong = true;
-     //      }  
-     // }  
-     
-// 1. KONFIGURASI PAGINATION
-// $jumlahDataPerhalaman = 2;
+// Logika penentuan keyword
+$keyword = "";
+$displayKeyword = ""; // Variabel untuk isi kotak input
+if (isset($_POST["find"])) {
+    $keyword = htmlspecialchars($_POST["keyword"]);
+    // Redirect ke halaman yang sama dengan parameter GET yang bersih
+    $displayKeyword = "";
+    header("Location: barang.php?keyword=" . urlencode($keyword));
+    exit;
+} elseif (isset($_GET["keyword"])) {
+    $keyword = $_GET["keyword"];
+    $displayKeyword = $keyword; // Tetap tampilkan jika melalui URL/Pagination
+}
 
-// 2. CEK APAKAH USER SEDANG MENCARI SESUATU
-// Gunakan $_GET atau $_REQUEST agar keyword tetap tersimpan saat pindah halaman
-// $keyword = "";
-// if (isset($_POST["find"])) {
-//     $keyword = $_POST["keyword"];
+// Tentukan limit per halaman
+$jumlahDataPerhalaman = 2; 
+// Panggil fungsi
+$hasilCari = cariBarang($keyword, $jumlahDataPerhalaman);
+// akses data:
+$products = $hasilCari['products'];
+$jumlahHalaman = $hasilCari['jumlahHalaman'];
+$halamanAktif = $hasilCari['halamanAktif'];
+$dataKosong = $hasilCari['dataKosong'];
+
+
+
+
+
+
+// // 1. Konfigurasi Pagination
+// $jumlahDataPerhalaman = 2;
+// // 2. Cek apakah user sedang melakukan pencarian dengan keyword tertentu
+// // Gunakan $_GET atau $_REQUEST agar keyword tetap tersimpan saat pindah halaman
+
+// $keyword = (isset($_GET["keyword"])) ? $_GET["keyword"] : "";
+// $displayKeyword = "";
+//  if (isset($_POST["find"])) {
+//     $keyword = htmlspecialchars($_POST["keyword"]);
+//     $displayKeyword = ""; // Ini yang membuat input jadi kosong lagi
+
 // } elseif (isset($_GET["keyword"])) {
 //     $keyword = $_GET["keyword"];
+//     $displayKeyword = $keyword;
+// } else {
+// 	  $keyword = "";
 // }
 
-// // 3. HITUNG TOTAL DATA (Berdasarkan Keyword jika ada)
+// // 3. Hitung Total Data (Berdasarkan Keyword jika ada)
 // if ($keyword != "") {
 //     $queryHitung = "SELECT * FROM products WHERE 
 //                     nama LIKE '%$keyword%' OR 
@@ -49,11 +70,11 @@
 // $jumlahData = count($hasilHitung);
 // $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
 
-// // 4. TENTUKAN HALAMAN AKTIF
+// // 4. Tentukan halaman Aktif
 // $halamanAktif = (isset($_GET["page"])) ? (int)$_GET["page"] : 1;
 // $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
 
-// // 5. AMBIL DATA DENGAN LIMIT (Sesuai Keyword + Pagination)
+// // 5. Ambil Data Dengan Limit (Sesuai Keyword + Pagination)
 // if ($keyword != "") {
 //     $queryData = "SELECT * FROM products WHERE 
 //                   nama LIKE '%$keyword%' OR 
@@ -67,73 +88,11 @@
 // }
 
 // $products = query($queryData);
-
-// // 6. CEK JIKA DATA KOSONG
-// if ($jumlahData == 0) {
-//     $dataKosong = true;
-// }
-
-
-// KONFIGURASI PAGINATION
-$jumlahDataPerhalaman = 2;
-
-// CEK APAKAH USER SEDANG MENCARI SESUATU
-// Ambil keyword dari URL (pakai method GET agar pagination sinkron)
-$keyword = (isset($_GET["keyword"])) ? $_GET["keyword"] : "";
-$displayKeyword = "";
-if (isset($_POST["find"])) {
-    $keyword = $_POST["keyword"];
-    $displayKeyword = ""; // Ini yang membuat input jadi kosong lagi
-
-} elseif (isset($_GET["keyword"])) {
-    $keyword = $_GET["keyword"];
-    $displayKeyword = $keyword;
-} else {
-	  $keyword = "";
-}
-
-// 3. HITUNG TOTAL DATA (Berdasarkan Keyword jika ada)
-if ($keyword != "") {
-    $queryHitung = "SELECT * FROM products WHERE 
-                    nama LIKE '%$keyword%' OR 
-                    kode LIKE '%$keyword%' OR 
-                    harga LIKE '%$keyword%' OR
-                    stock LIKE '%$keyword%' OR
-                    kategori LIKE '%$keyword%'";
-} else {
-    $queryHitung = "SELECT * FROM products";
-}
-
-$hasilHitung = query($queryHitung);
-$jumlahData = count($hasilHitung);
-$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
-
-// 4. TENTUKAN HALAMAN AKTIF
-$halamanAktif = (isset($_GET["page"])) ? (int)$_GET["page"] : 1;
-$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
-
-//  ambil data dengan LIMIT (Sesuai Keyword + Pagination)
-if ($keyword != "") {
-    $queryData = "SELECT * FROM products WHERE 
-                  nama LIKE '%$keyword%' OR 
-                  kode LIKE '%$keyword%' OR 
-                  harga LIKE '%$keyword%' OR
-                  stock LIKE '%$keyword%' OR
-                  kategori LIKE '%$keyword%' 
-                  LIMIT $awalData, $jumlahDataPerhalaman";
-} else {
-    $queryData = "SELECT * FROM products LIMIT $awalData, $jumlahDataPerhalaman";
-}
-
-$products = query($queryData);
-
- // cek jika data kosong
-if ($jumlahData == 0) {
-    $dataKosong = true;
-}
-
-
-
+// // 6. Cek jika data kosong 
+//      $jumlahData = count($products);
+//      	  if($jumlahData == 0) {
+//            $dataKosong = true;
+//   }  
 
 
   ?>
@@ -155,9 +114,19 @@ if ($jumlahData == 0) {
         </div>
 	     <form action="" method="post" class="form-cari">
                <div class="input-group search-box">
-	     	      <input type="text" name="keyword" autofocus placeholder="keyword Pencarian" autocomplete="off" value="<?= $displayKeyword; ?>">
+	     	
+               	<input type="text" name="keyword" autofocus placeholder="keyword Pencarian" autocomplete="off" >
 	     	   </div>
-	     	      <button type="submit" name="find" class="btn fill barang">Find Data</button>
+	     	      <button type="submit" name="find" class="btn fill barang" onclick="setTimeout(() => { document.getElementsByName('keyword')[0].value = ''; }, 5)">Find Data</button>
+                   
+  <?php if (isset($_GET["keyword"]) && $_GET["keyword"] !== "") : ?>
+    <a href="barang.php">
+        <button type="button" class="btn fill">Refresh halaman</button>
+    </a>
+<?php endif; ?>
+
+
+
 	     </form>
 	     <!-- navigasi -->
 	     <div class="nav-pagination">
@@ -194,8 +163,8 @@ if ($jumlahData == 0) {
 	 	  	    </tr>
 	 	  </thead>
 	 	  <tbody>
-	 	  	 <?php if (isset($dataKosong)) :?>
-            <p style="collor: red; font-size: 1.5em;">Data Tidak Ditemukan!</p>
+	 	  	 <?php if ($dataKosong) :?>
+            <p style="text-align: center; color: red; font-style: italic;">Data tidak ditemukan untuk kata kunci "<strong><?= $keyword; ?></strong>"</p>
 	 	  	<?php endif; ?>
 	 	  	<?php $urutan = 1; ?>
 	 	  	<?php  foreach( $products as $row ) : ?>	

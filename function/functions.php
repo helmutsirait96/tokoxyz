@@ -144,30 +144,44 @@
            return mysqli_affected_rows($db);
  }
 
-//  Cari Barang & pagination
- // Konfigurasi pagination
-     // jumlah data perhalaman 
-    // $jumlahDataPerhalaman = 2;
-    // jumlah halaman = total data / data perhalaman
-    // Jumlah data yang ada di dalam database
-    // $jumlahData = count(query("SELECT * FROM products"));
-    // jumlah halaman yang mau di tampilkan
-    // $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
-    // mengambil halaman aktif
-    // $halamanAktif = ( isset($_GET["page"]) ) ? $_GET["page"] : 1;
-    // awal data perhalaman
-    // $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
-    // halaman = 2, awal data = 3 
+function cariBarang($keyword, $jumlahDataPerhalaman) {
+    // 1. Tentukan halaman Aktif
+    $halamanAktif = (isset($_GET["page"])) ? (int)$_GET["page"] : 1;
+    $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
 
-function cariBarang($keyword) {
-     $query = "SELECT * FROM products WHERE 
-                nama LIKE '%$keyword%' OR 
-                kode LIKE '%$keyword%' OR 
-                harga LIKE '%$keyword%' OR
-                stock LIKE '%$keyword%' OR
-               kategori LIKE '%$keyword%'";
-      return query($query);        
+    // 2. Susun Query dasar berdasarkan keyword
+    $kondisi = "";
+    if ($keyword != "") {
+        $kondisi = " WHERE 
+                    nama LIKE '%$keyword%' OR 
+                    kode LIKE '%$keyword%' OR 
+                    harga LIKE '%$keyword%' OR
+                    stock LIKE '%$keyword%' OR
+                    kategori LIKE '%$keyword%'";
+    }
+
+    // 3. Hitung Total Data untuk Pagination
+    $queryHitung = "SELECT * FROM products" . $kondisi;
+    $hasilHitung = query($queryHitung);
+    $totalData = count($hasilHitung);
+    $jumlahHalaman = ceil($totalData / $jumlahDataPerhalaman);
+
+    // 4. Ambil Data dengan Limit
+    $queryData = "SELECT * FROM products" . $kondisi . " LIMIT $awalData, $jumlahDataPerhalaman";
+    $products = query($queryData);
+
+    // 5. Kembalikan semua data yang dibutuhkan dalam bentuk array associative
+    return [
+        "products" => $products,
+        "jumlahHalaman" => $jumlahHalaman,
+        "halamanAktif" => $halamanAktif,
+        "totalData" => $totalData,
+        "dataKosong" => (count($products) == 0)
+    ];
 }
+
+
+
 
 // Function Register User
    function registerUser($register) {
@@ -206,6 +220,25 @@ function cariBarang($keyword) {
          return mysqli_affected_rows($db);
    }
 
+  
+  // function salam 
+   function waktu() {
+        $hour = intval(date("H"));
+         if( $hour < 12) {
+              $waktu = "Morning";
+         } elseif ($hour >= 12 && $hour <17) {
+             $waktu = "Afternoon";
+         } elseif ($hour >= 17 && $hour < 19) {
+             $waktu = "Evening";
+         } else {
+              $waktu = "Night";
+         }
+    return $waktu;
+   }
+  
+  function salam($waktu = "Datang", $nama = "Admin") {
+        return "Good $waktu $nama";
+    }
 
 
   ?>
